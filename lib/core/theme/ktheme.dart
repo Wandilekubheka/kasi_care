@@ -4,6 +4,11 @@ import 'package:kasi_care/core/theme/app_colors.dart';
 
 abstract class Ktheme {
   static final appTheme = ThemeData(
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        iconColor: MaterialStateProperty.all(Color(AppColors.background)),
+      ),
+    ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
@@ -90,5 +95,6 @@ abstract class Ktheme {
         color: Color(AppColors.textPrimary),
       ),
     ),
+    cardColor: Color(AppColors.primary),
   );
 }

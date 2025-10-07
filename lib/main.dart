@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kasi_care/core/blocs/user_cubit.dart';
 import 'package:kasi_care/core/data/models/firebase.dart';
 import 'package:kasi_care/core/theme/ktheme.dart';
+import 'package:kasi_care/core/theme/widgets/app_tabbar.dart';
 import 'package:kasi_care/features/auth/data/repository/auth_repository.dart';
 import 'package:kasi_care/features/auth/data/services/fireabse_auth.dart';
 import 'package:kasi_care/features/auth/pages/blocs/auth_bloc.dart';
 import 'package:kasi_care/features/auth/pages/screens/login_page.dart';
+import 'package:kasi_care/features/home/pages/screens/home_page.dart';
 import 'package:kasi_care/firebase_options.dart';
 
 import 'package:kasi_care/core/data/models/firebase.dart' show FirebaseInstance;
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error'));
           } else if (snapshot.hasData) {
-            return const Scaffold(body: Center(child: Text('Logged In')));
+            return const HomePage();
           } else {
             return const LoginPage();
           }
