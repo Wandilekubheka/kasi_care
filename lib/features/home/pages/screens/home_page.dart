@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kasi_care/core/theme/app_colors.dart';
+import 'package:kasi_care/features/home/pages/screens/add_data_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +15,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddDataPage()),
+          );
+        },
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
@@ -24,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.download, color: Colors.black),
             onPressed: () {
-              // Handle notification icon press
+              // downloads data for the month
             },
           ),
         ],

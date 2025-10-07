@@ -96,5 +96,14 @@ abstract class Ktheme {
       ),
     ),
     cardColor: Color(AppColors.primary),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Color(AppColors.background),
+      titleTextStyle: GoogleFonts.poppins(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: Color(AppColors.textPrimary),
+      ),
+      elevation: 0,
+    ),
   );
 }
