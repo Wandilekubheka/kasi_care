@@ -6,7 +6,7 @@ abstract class Ktheme {
   static final appTheme = ThemeData(
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        iconColor: MaterialStateProperty.all(Color(AppColors.background)),
+        iconColor: MaterialStateProperty.all(Color(AppColors.textPrimary)),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(

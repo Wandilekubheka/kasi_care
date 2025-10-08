@@ -38,6 +38,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Spacer(),
+
+                    Image.asset('assets/images/logo.jpg', height: 100),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Welcome Back',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    const SizedBox(height: 16),
                     CustomTextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,

@@ -5,11 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kasi_care/core/blocs/user_cubit.dart';
 import 'package:kasi_care/core/data/models/firebase.dart';
 import 'package:kasi_care/core/theme/ktheme.dart';
-import 'package:kasi_care/core/theme/widgets/app_tabbar.dart';
 import 'package:kasi_care/features/auth/data/repository/auth_repository.dart';
 import 'package:kasi_care/features/auth/data/services/fireabse_auth.dart';
 import 'package:kasi_care/features/auth/pages/blocs/auth_bloc.dart';
 import 'package:kasi_care/features/auth/pages/screens/login_page.dart';
+import 'package:kasi_care/features/home/blocs/home/home_cupit.dart';
+import 'package:kasi_care/features/home/data/repository/impcalender_repository.dart';
+import 'package:kasi_care/features/home/data/service/firestore.dart';
+import 'package:kasi_care/features/home/data/service/local_database.dart';
 import 'package:kasi_care/features/home/pages/screens/home_page.dart';
 import 'package:kasi_care/firebase_options.dart';
 
@@ -22,11 +25,21 @@ void main() async {
     FirebaseAuthService(),
     FirebaseInstance.firestoreInstance,
   );
+  final datasource = ImpCalendarRepository(
+    userId: FirebaseInstance.auth.currentUser?.uid ?? "",
+    firestoreService: FirestoreService(
+      userId: FirebaseInstance.auth.currentUser?.uid ?? "",
+      firebaseFirestore: FirebaseInstance.firestoreInstance,
+    ),
+    localDatabase: LocalDatabase(),
+  );
+
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthBloc(authRepository)),
         BlocProvider(create: (context) => UserCubit()),
+        BlocProvider(create: (context) => HomeCupit(datasource)),
       ],
       child: const MyApp(),
     ),
@@ -49,6 +62,7 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error'));
           } else if (snapshot.hasData) {
+            print('User is logged in: ${snapshot.data?.email}');
             return const HomePage();
           } else {
             return const LoginPage();

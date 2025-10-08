@@ -44,7 +44,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Spacer(),
+                    const Spacer(),
+                    Image.asset('assets/images/logo.jpg', height: 100),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Create Account',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    const SizedBox(height: 16),
                     CustomTextFormField(
                       controller: fullNameController,
                       keyboardType: TextInputType.name,
@@ -74,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 16.0),
                     CustomTextFormField(
-                      controller: TextEditingController(),
+                      controller: passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
                       validator: (value) {
@@ -89,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 16.0),
                     CustomTextFormField(
-                      controller: TextEditingController(),
+                      controller: confirmPasswordController,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
                       validator: (value) {
@@ -98,9 +105,26 @@ class _RegisterPageState extends State<RegisterPage> {
                             value.length < 6) {
                           return 'Please confirm your password';
                         }
+                        if (value != passwordController.text) {
+                          return 'Passwords do not match';
+                        }
                         return null;
                       },
                       labelText: 'Confirm Password',
+                    ),
+                    Visibility(
+                      child: state is AuthUnauthenticated
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                state.message!,
+                                style: const TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ),
                     const SizedBox(height: 24.0),
                     SizedBox(
@@ -112,9 +136,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             await context.read<AuthBloc>().register(
-                              fullNameController.text,
                               emailController.text,
                               passwordController.text,
+                              fullNameController.text,
                             );
                           }
                         },

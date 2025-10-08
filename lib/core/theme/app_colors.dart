@@ -4,7 +4,7 @@
 class AppColors {
   static const primary = 0xFFB22222; // FireBrick Red
   static const secondary = 0xFFFFFFFF; // White
-  static const background = 0xFFF5F5F5; // Light Grey
+  static const background = 0xFFFFFFFF; // Light Grey
   static const textPrimary = 0xFF333333; // Dark Grey
   static const textSecondary = 0xFF777777; // Medium Grey
   static const accent = 0xFFFFA500; // Orange
