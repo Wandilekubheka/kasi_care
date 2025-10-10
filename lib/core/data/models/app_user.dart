@@ -1,4 +1,4 @@
-import 'package:kasi_care/core/data/models/location_coords.dart';
+import 'package:clock_mate/core/data/models/location_coords.dart';
 
 class AppUser {
   final String id;

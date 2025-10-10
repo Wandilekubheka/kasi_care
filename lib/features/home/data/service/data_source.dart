@@ -1,6 +1,6 @@
-import 'package:kasi_care/features/home/data/models/day.dart';
-import 'package:kasi_care/features/home/data/service/firestore.dart';
-import 'package:kasi_care/features/home/data/service/local_database.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
+import 'package:clock_mate/features/home/data/service/firestore.dart';
+import 'package:clock_mate/features/home/data/service/local_database.dart';
 
 class DataSource {
   final FirestoreService firestoreService;

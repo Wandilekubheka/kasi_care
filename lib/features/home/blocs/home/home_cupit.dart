@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kasi_care/features/home/blocs/home/home_state.dart';
-import 'package:kasi_care/features/home/data/models/day.dart';
-import 'package:kasi_care/features/home/data/repository/impcalender_repository.dart';
+import 'package:clock_mate/features/home/blocs/home/home_state.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
+import 'package:clock_mate/features/home/data/repository/impcalender_repository.dart';
 
 class HomeCupit extends Cubit<HomeState> {
   final ImpCalendarRepository dataSource;
@@ -18,7 +18,6 @@ class HomeCupit extends Cubit<HomeState> {
       if (e is FormatException) {
         emit(HomeError(e.message));
       } else {
-        print(e);
         emit(HomeError('An unexpected error occurred'));
       }
     }
@@ -28,6 +27,21 @@ class HomeCupit extends Cubit<HomeState> {
     emit(HomeLoading());
     try {
       await dataSource.addDataToMonth(dayData);
+      final monthData = await dataSource.fetchMonthlyData(dayData.date);
+      emit(HomeMonthData(monthData));
+    } catch (e) {
+      if (e is FormatException) {
+        emit(HomeError(e.message));
+      } else {
+        emit(HomeError('An unexpected error occurred'));
+      }
+    }
+  }
+
+  Future<void> deleteData(DayData dayData) async {
+    emit(HomeLoading());
+    try {
+      await dataSource.deleteData(dayData);
       final monthData = await dataSource.fetchMonthlyData(dayData.date);
       emit(HomeMonthData(monthData));
     } catch (e) {

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kasi_care/features/home/data/models/day.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
 
 class FirestoreService {
   final String userId;
@@ -11,6 +11,7 @@ class FirestoreService {
           .collection('users')
           .doc(userId)
           .collection('${date.year - date.month}')
+          .orderBy('date', descending: true)
           .get();
 
       return querySnapshot.docs
@@ -22,12 +23,14 @@ class FirestoreService {
   }
 
   Future<void> addData(DayData dayData) async {
+    print('id is ${dayData.id}');
+
     try {
       await firebaseFirestore
           .collection('users')
           .doc(userId)
-          .collection('${dayData.id.year - dayData.id.month}')
-          .doc(dayData.id.toIso8601String())
+          .collection('${dayData.date.year - dayData.date.month}')
+          .doc(dayData.id)
           .set(dayData.toJson());
     } catch (e) {
       rethrow;
@@ -39,13 +42,14 @@ class FirestoreService {
     // Implementation for updating data in Firestore
   }
 
-  Future<void> deleteData(DateTime id) async {
+  Future<void> deleteData(DayData id) async {
+    print('id is ${id.id}');
     try {
       await firebaseFirestore
           .collection('users')
           .doc(userId)
-          .collection('${id.year - id.month}')
-          .doc(id.toIso8601String())
+          .collection('${id.date.year - id.date.month}')
+          .doc(id.id)
           .delete();
     } catch (e) {
       rethrow;

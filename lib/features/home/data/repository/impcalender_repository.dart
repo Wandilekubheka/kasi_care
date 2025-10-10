@@ -1,7 +1,7 @@
-import 'package:kasi_care/features/home/data/models/day.dart';
-import 'package:kasi_care/features/home/data/service/firestore.dart';
-import 'package:kasi_care/features/home/data/service/local_database.dart';
-import 'package:kasi_care/features/home/domain/repository/calendar_repository.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
+import 'package:clock_mate/features/home/data/service/firestore.dart';
+import 'package:clock_mate/features/home/data/service/local_database.dart';
+import 'package:clock_mate/features/home/domain/repository/calendar_repository.dart';
 
 class ImpCalendarRepository implements CalendarRepository {
   final String userId;
@@ -14,7 +14,11 @@ class ImpCalendarRepository implements CalendarRepository {
   });
   @override
   Future<List<DayData>> fetchMonthlyData(DateTime date) async {
-    return await firestoreService.fetchMonthData(date);
+    try {
+      return await firestoreService.fetchMonthData(date);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -28,7 +32,7 @@ class ImpCalendarRepository implements CalendarRepository {
   }
 
   @override
-  Future<void> deleteData(DateTime date) async {
-    return await firestoreService.deleteData(date);
+  Future<void> deleteData(DayData datasource) async {
+    return await firestoreService.deleteData(datasource);
   }
 }

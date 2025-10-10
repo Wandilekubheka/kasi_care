@@ -1,11 +1,13 @@
+import 'package:clock_mate/features/home/blocs/home/files_cupit.dart';
+import 'package:clock_mate/features/home/blocs/home/files_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kasi_care/core/theme/app_colors.dart';
-import 'package:kasi_care/features/auth/data/services/fireabse_auth.dart';
-import 'package:kasi_care/features/home/blocs/home/home_cupit.dart';
-import 'package:kasi_care/features/home/blocs/home/home_state.dart';
-import 'package:kasi_care/features/home/data/models/day.dart';
-import 'package:kasi_care/features/home/pages/screens/add_data_page.dart';
+import 'package:clock_mate/core/theme/app_colors.dart';
+import 'package:clock_mate/features/home/blocs/home/home_cupit.dart';
+import 'package:clock_mate/features/home/blocs/home/home_state.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
+import 'package:clock_mate/features/home/pages/screens/add_data_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   final DateTime _today = DateTime.now();
   double totalHours = 0;
   double totalMins = 0;
-  final FirebaseAuthService _authService = FirebaseAuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +39,34 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.download, color: Colors.black),
             onPressed: () async {
-              await _authService.signOut();
-              // downloads data for the month
+              final cupit = context.read<FilesCupit>();
+              await cupit.uploadFile();
+              final state = cupit.state;
+              if (state is FilesError) {
+                if (mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
+                }
+                return;
+              }
+              if (state is FilesSuccess) {
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("File created successfully")),
+                  );
+                }
+                await cupit.shareFile(state.file);
+                final shareState = cupit.state;
+                if (shareState is FilesError) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(shareState.message)));
+                  }
+                  return;
+                }
+              }
             },
           ),
         ],
@@ -80,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         );
-                      }).toList(),
+                      }),
                     const SizedBox(height: 16),
 
                     Row(
@@ -172,6 +199,48 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDataCard(DayData data, double hours, double mins) {
     return GestureDetector(
+      onLongPress: () {
+        showCupertinoDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text("Delete Entry"),
+              content: Text("Are you sure you want to delete this entry?"),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text("Cancel"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                CupertinoDialogAction(
+                  child: Text("Delete"),
+                  onPressed: () async {
+                    // Handle delete action
+                    await context.read<HomeCupit>().deleteData(data);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddDataPage(
+              existingData: DayData(
+                date: data.date,
+                timeSpent: data.timeSpent,
+                description: data.description,
+                id: data.id,
+              ),
+            ),
+          ),
+        );
+      },
       child: Card(
         color: Color(AppColors.primary),
         child: Container(

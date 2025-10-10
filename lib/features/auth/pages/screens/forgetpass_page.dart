@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kasi_care/features/auth/pages/blocs/auth_bloc.dart';
-import 'package:kasi_care/features/auth/pages/blocs/auth_state.dart';
+import 'package:clock_mate/features/auth/pages/blocs/auth_bloc.dart';
+import 'package:clock_mate/features/auth/pages/blocs/auth_state.dart';
 
 class ForgetpassPage extends StatelessWidget {
   const ForgetpassPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kasi_care/core/blocs/user_state.dart';
-import 'package:kasi_care/core/data/models/app_user.dart';
+import 'package:clock_mate/core/blocs/user_state.dart';
+import 'package:clock_mate/core/data/models/app_user.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(UserInitial());

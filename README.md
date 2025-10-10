@@ -1,6 +1,6 @@
-# kasi_care
+# Clock Mate
 
-A new Flutter project.
+Clock Mate - Your time management companion.
 
 ## Getting Started
 

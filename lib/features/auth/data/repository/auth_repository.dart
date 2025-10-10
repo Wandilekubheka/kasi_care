@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kasi_care/core/data/models/app_user.dart';
-import 'package:kasi_care/features/auth/data/services/fireabse_auth.dart';
+import 'package:clock_mate/core/data/models/app_user.dart';
+import 'package:clock_mate/features/auth/data/services/fireabse_auth.dart';
 
 class AuthRepository {
   final FirebaseAuthService _firebaseAuthService;

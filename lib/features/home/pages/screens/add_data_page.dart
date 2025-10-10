@@ -1,12 +1,12 @@
+import 'package:clock_mate/core/theme/app_colors.dart';
+import 'package:clock_mate/features/home/blocs/home/home_cupit.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kasi_care/core/theme/app_colors.dart';
-import 'package:kasi_care/features/home/blocs/home/home_cupit.dart';
-import 'package:kasi_care/features/home/data/models/day.dart';
 
 class AddDataPage extends StatefulWidget {
-  final DateTime? defaultDate;
-  const AddDataPage({super.key, this.defaultDate});
+  final DayData? existingData;
+  const AddDataPage({super.key, this.existingData});
 
   @override
   State<AddDataPage> createState() => _AddDataPageState();
@@ -20,14 +20,18 @@ class _AddDataPageState extends State<AddDataPage> {
   @override
   void initState() {
     super.initState();
-    selectedDate = widget.defaultDate ?? DateTime.now();
+    selectedDate = widget.existingData?.date ?? DateTime.now();
+    timeDurationController.text =
+        widget.existingData?.timeSpent.toString() ?? '';
+    descriptionController.text = widget.existingData?.description ?? '';
+    print("existing data: ${widget.existingData}");
   }
 
   Future<void> submit(BuildContext context) async {
     await context.read<HomeCupit>().addData(
       DayData(
+        id: widget.existingData?.id,
         date: selectedDate,
-        id: selectedDate,
         description: descriptionController.text,
         timeSpent: int.parse(timeDurationController.text),
       ),

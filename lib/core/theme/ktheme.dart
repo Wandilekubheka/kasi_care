@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kasi_care/core/theme/app_colors.dart';
+import 'package:clock_mate/core/theme/app_colors.dart';
 
 abstract class Ktheme {
   static final appTheme = ThemeData(

@@ -1,4 +1,4 @@
-import 'package:kasi_care/core/data/models/app_user.dart';
+import 'package:clock_mate/core/data/models/app_user.dart';
 
 class UserState {}
 

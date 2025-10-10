@@ -1,7 +1,5 @@
-import 'dart:math';
-
-import 'package:kasi_care/features/auth/data/repository/auth_repository.dart';
-import 'package:kasi_care/features/auth/pages/blocs/auth_state.dart';
+import 'package:clock_mate/features/auth/data/repository/auth_repository.dart';
+import 'package:clock_mate/features/auth/pages/blocs/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Cubit<AuthState> {

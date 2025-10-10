@@ -1,4 +1,4 @@
-import 'package:kasi_care/features/home/data/models/day.dart';
+import 'package:clock_mate/features/home/data/models/day.dart';
 
 class HomeState {}
 
